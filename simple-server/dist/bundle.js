@@ -1,41 +1,41 @@
 /******/ (function(modules) { // webpackBootstrap
 /******/ 	// The module cache
 /******/ 	var installedModules = {};
-
+/******/
 /******/ 	// The require function
 /******/ 	function __webpack_require__(moduleId) {
-
+/******/
 /******/ 		// Check if module is in cache
 /******/ 		if(installedModules[moduleId])
 /******/ 			return installedModules[moduleId].exports;
-
+/******/
 /******/ 		// Create a new module (and put it into the cache)
 /******/ 		var module = installedModules[moduleId] = {
 /******/ 			exports: {},
 /******/ 			id: moduleId,
 /******/ 			loaded: false
 /******/ 		};
-
+/******/
 /******/ 		// Execute the module function
 /******/ 		modules[moduleId].call(module.exports, module, module.exports, __webpack_require__);
-
+/******/
 /******/ 		// Flag the module as loaded
 /******/ 		module.loaded = true;
-
+/******/
 /******/ 		// Return the exports of the module
 /******/ 		return module.exports;
 /******/ 	}
-
-
+/******/
+/******/
 /******/ 	// expose the modules object (__webpack_modules__)
 /******/ 	__webpack_require__.m = modules;
-
+/******/
 /******/ 	// expose the module cache
 /******/ 	__webpack_require__.c = installedModules;
-
+/******/
 /******/ 	// __webpack_public_path__
 /******/ 	__webpack_require__.p = "/dist/";
-
+/******/
 /******/ 	// Load entry module and return exports
 /******/ 	return __webpack_require__(0);
 /******/ })
@@ -45,39 +45,43 @@
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
-
+	
 	var _redux = __webpack_require__(1);
-
+	
 	var _reduxShareServer = __webpack_require__(2);
-
+	
 	var _reduxShareServer2 = _interopRequireDefault(_reduxShareServer);
-
+	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
+	
 	var server = __webpack_require__(3).createServer(),
 	    url = __webpack_require__(4),
 	    express = __webpack_require__(5),
 	    app = express(),
 	    port = 2000;
-
+	
 	var reducer = function reducer(state, action) {
 	  return state;
 	};
-
+	
 	//create the store.
 	var store = (0, _redux.createStore)(reducer, { default: "default" });
-
+	
 	//start the sockets etc.
-	var syncReduxServer = (0, _reduxShareServer2.default)(store, server);
-
+	var shareServer = new _reduxShareServer2.default(store, server, {
+	  debug: true,
+	  repeaterMode: true
+	});
+	
 	//bind redux server and express
-	app.use('/redux', syncReduxServer.getMiddleware());
-
+	app.use('/redux', shareServer.getExpressMiddleware());
+	
 	//bind http and express
 	server.on('request', app);
-
+	
 	server.listen(port, function () {
-	  console.log('Listening on ' + server.address().port);
+	  console.log('GET http://localhost:' + server.address().port + '/redux/state to view the state');
+	  console.log('POST http://localhost:' + server.address().port + '/redux/action to post an action to all clients');
 	});
 
 /***/ },
@@ -112,3 +116,4 @@
 
 /***/ }
 /******/ ]);
+//# sourceMappingURL=bundle.js.map
