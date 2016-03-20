@@ -13,6 +13,8 @@
 ```
 
 /!\ It is highly experimental. /!\
+[See the video presentation](https://youtu.be/SPkdwmRmk5k)
+
 Redux share is a middleware for redux to stream actions via a websocket between one or several clients and a server. It allows you to develop realtime, collaborative applications and games.
 
 It uses a [server](https://github.com/baptistemanson/redux-share-server) and a [client](https://github.com/baptistemanson/redux-share-client).
