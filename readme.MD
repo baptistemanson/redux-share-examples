@@ -31,7 +31,7 @@ If you wish to use your own modified client and server instead of the github one
                       
 ```
 
-If you got thisYou can run in each example folder:
+You can run in each example folder:
 
 ```bash
 
