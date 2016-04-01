@@ -18,12 +18,13 @@ var client = new SyncReduxClient('ws://localhost:2000',
 	autoReconnectDelay:100
 });
 
-var store = createStore(reducer,applyMiddleware(client.getClientMiddleware()));
+var store = createStore(reducer,applyMiddleware(client.getReduxMiddleware()));
 
 // This action starts the connection to the server. 
 // Upon success another action @@SYNC-CONNECT-SERVER-SUCCESS will be dispatched to the server, with the full state in parameter.
 store.dispatch({type:"@@SYNC-CONNECT-SERVER-START"});
 
+window.store = store;
 
 /* 
 
